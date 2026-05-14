@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivarium Atelier — Natürliche Vivariumgestaltung, Schweiz</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --black:        #131311;
+    --off-black:    #131311;
+    --dark-green:   #1A2A1C;
+    --mid-green:    #2C4A2E;
+    --leaf-green:   #4A7A3A;
+    --bright-green: #6AAF4A;
+    --white:        #F5F2EC;
+    --off-white:    #EDE9E0;
+    --text-primary: #F0EDE5;
+    --text-secondary: #9A9690;
+    --text-dim:     #5A5750;
+    --border:       rgba(255,255,255,0.07);
+    --border-mid:   rgba(255,255,255,0.13);
+    --font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-ui:      'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-weight: 300;
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.022;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    animation: grain 8s steps(10) infinite;
+  }
+  @keyframes grain {
+    0%,100%  { transform: translate(0,0); }
+    10% { transform: translate(-5%,-10%); }
+    20% { transform: translate(-15%,5%); }
+    30% { transform: translate(7%,-25%); }
+    40% { transform: translate(-5%,25%); }
+    50% { transform: translate(-15%,10%); }
+    60% { transform: translate(15%,0%); }
+    70% { transform: translate(0%,15%); }
+    80% { transform: translate(3%,35%); }
+    90% { transform: translate(-10%,10%); }
+  }
+
+  /* ════════════════════ NAV ════════════════════ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0; z-index: 100;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 56px;
+    border-bottom: 1px solid transparent;
+    transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(19,19,17,0.95);
+    border-color: var(--border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .nav-logo img { height: 34px; width: auto; object-fit: contain; }
+  .nav-links { display: flex; align-items: center; gap: 40px; }
+  .nav-link {
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.16em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--white); }
+  .nav-cta {
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--bright-green);
+    text-decoration: none;
+    padding: 8px 18px;
+    border: 1px solid rgba(106,175,74,0.35);
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .nav-cta:hover {
+    background: rgba(106,175,74,0.1);
+    border-color: rgba(106,175,74,0.6);
+    color: var(--white);
+  }
+  .nav-hamburger {
+    display: none; flex-direction: column;
+    gap: 5px; cursor: pointer; padding: 4px; background: none; border: none;
+  }
+  .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--text-secondary); transition: all 0.3s; }
+
+  /* ════════════════════ HERO ════════════════════ */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 0 100px;
+    overflow: hidden;
+  }
+  .hero-bg-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    filter: saturate(0.7) brightness(0.55);
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(19,19,17,0.3) 0%, rgba(19,19,17,0.0) 25%, rgba(19,19,17,0.55) 70%, rgba(19,19,17,0.97) 100%),
+      radial-gradient(ellipse 55% 60% at 80% 30%, rgba(26,42,28,0.4) 0%, transparent 65%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 72px; max-width: 1200px;
+  }
+  .hero-eyebrow {
+    font-size: 10px; font-weight: 400;
+    letter-spacing: 0.24em; color: var(--bright-green);
+    text-transform: uppercase; margin-bottom: 28px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 28px; height: 1px;
+    background: var(--bright-green); opacity: 0.7;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(60px, 9vw, 124px);
+    font-weight: 300; line-height: 0.92;
+    color: var(--white); letter-spacing: -0.03em;
+    margin-bottom: 36px;
+  }
+  .hero-title em { font-style: italic; color: var(--bright-green); }
+  .hero-sub {
+    font-size: 15px; font-weight: 300;
+    color: rgba(240,237,229,0.72);
+    line-height: 1.65; max-width: 480px;
+    margin-bottom: 48px;
+  }
+  .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    display: inline-block;
+    background: var(--leaf-green); color: var(--white);
+    font-family: var(--font-ui); font-size: 11px;
+    font-weight: 500; letter-spacing: 0.14em;
+    padding: 13px 28px; border-radius: 2px;
+    text-decoration: none; text-transform: uppercase;
+    box-shadow: 0 4px 20px rgba(74,122,58,0.28), 0 1px 4px rgba(0,0,0,0.35);
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    border: none; cursor: pointer;
+  }
+  .btn-primary:hover {
+    background: var(--bright-green);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(106,175,74,0.38), 0 2px 8px rgba(0,0,0,0.35);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-ghost {
+    display: inline-block;
+    background: transparent; color: var(--text-primary);
+    font-family: var(--font-ui); font-size: 11px;
+    font-weight: 400; letter-spacing: 0.14em;
+    padding: 12px 26px; border-radius: 2px;
+    border: 1px solid var(--border-mid);
+    text-decoration: none; text-transform: uppercase;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover {
+    border-color: rgba(255,255,255,0.3);
+    color: var(--white);
+    background: rgba(255,255,255,0.04);
+  }
+  .btn-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--bright-green);
+    font-family: var(--font-display);
+    font-size: 17px; font-style: italic;
+    font-weight: 300; text-decoration: none;
+    transition: color 0.2s, gap 0.2s;
+  }
+  .btn-link .arr { font-style: normal; font-size: 13px; transition: transform 0.2s; }
+  .btn-link:hover { color: var(--white); gap: 13px; }
+  .btn-link:hover .arr { transform: translateX(3px); }
+
+  /* ════════════════════ SCROLL GROWTH ════════════════════ */
+  .scroll-growth {
+    position: fixed;
+    right: 6px; top: 0; bottom: 0;
+    width: 68px; z-index: 50;
+    pointer-events: none;
+  }
+  .scroll-growth svg {
+    width: 100%; height: 100%;
+    display: block; overflow: visible;
+  }
+  .scroll-growth-ghost {
+    fill: none;
+    stroke: rgba(255,255,255,0.04);
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .scroll-growth-path {
+    fill: none;
+    stroke: url(#rootGrad);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 4px rgba(106,175,74,0.45));
+  }
+  @media (max-width: 768px) { .scroll-growth { display: none; } }
+
+  /* ════════════════════ STATEMENT ════════════════════ */
+  .statement {
+    background: var(--off-black);
+    border-bottom: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    padding: 96px 72px;
+    text-align: center;
+  }
+  .statement-label {
+    display: inline-block;
+    font-size: 10px; letter-spacing: 0.22em;
+    color: var(--leaf-green); text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .statement-text {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 4vw, 48px);
+    font-weight: 300; color: var(--white);
+    line-height: 1.18; letter-spacing: -0.02em;
+    max-width: 860px; margin: 0 auto;
+  }
+  .statement-text em { font-style: italic; color: var(--bright-green); }
+  .statement-body {
+    font-size: 14px; font-weight: 300;
+    color: var(--text-secondary); line-height: 1.8;
+    max-width: 560px; margin: 28px auto 0;
+  }
+
+  /* ════════════════════ SECTIONS ════════════════════ */
+  .section { padding: 112px 72px; position: relative; }
+  .section-alt { background: var(--off-black); }
+  .section-rule { border: none; border-top: 1px solid var(--border); margin: 0; }
+  .section-label {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.22em; color: var(--leaf-green);
+    text-transform: uppercase; margin-bottom: 14px;
+    display: block;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.5vw, 58px);
+    font-weight: 300; color: var(--white);
+    letter-spacing: -0.025em; line-height: 1.02;
+    margin-bottom: 56px;
+  }
+  .section-title em { font-style: italic; color: var(--bright-green); }
+
+  /* ════════════════════ SERVICES ════════════════════ */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    border: 1px solid var(--border);
+    background: var(--border);
+    border-radius: 4px; overflow: hidden;
+  }
+  .service-card {
+    background: var(--black);
+    padding: 52px 48px;
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+  }
+  .section-alt .service-card { background: var(--off-black); }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, var(--leaf-green), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .service-card:hover { background: rgba(74,122,58,0.04); }
+  .service-card:hover::before { opacity: 1; }
+  .service-num {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.18em; color: var(--text-dim);
+    text-transform: uppercase; margin-bottom: 32px;
+  }
+  .service-icon { width: 32px; height: 32px; color: var(--leaf-green); margin-bottom: 22px; }
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 24px; font-weight: 400;
+    color: var(--white); letter-spacing: -0.01em;
+    margin-bottom: 14px; line-height: 1.1;
+  }
+  .service-body {
+    font-size: 13px; font-weight: 300;
+    color: var(--text-secondary); line-height: 1.78;
+  }
+  .service-tag {
+    display: inline-block; margin-top: 26px;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.16em; color: var(--leaf-green);
+    text-transform: uppercase;
+  }
+
+  /* ════════════════════ ABOUT ════════════════════ */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px; align-items: center;
+  }
+  .about-visual { position: relative; }
+  .about-img-wrap {
+    position: relative; border-radius: 3px;
+    overflow: hidden; aspect-ratio: 3/4;
+  }
+  .about-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .about-img-wrap:hover img { transform: scale(1.03); }
+  .about-img-wrap::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(19,19,17,0.5) 0%, rgba(26,42,28,0.15) 50%, transparent 75%);
+    pointer-events: none;
+  }
+  .about-img-accent {
+    position: absolute;
+    bottom: -28px; right: -28px;
+    width: 46%; aspect-ratio: 2/3;
+    border-radius: 3px; overflow: hidden;
+    border: 3px solid var(--black);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.5);
+    z-index: 1;
+  }
+  .about-img-accent img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .about-title {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3.8vw, 48px);
+    font-weight: 300; color: var(--white);
+    letter-spacing: -0.025em; line-height: 1.08;
+    margin-bottom: 28px;
+  }
+  .about-title em { font-style: italic; color: var(--bright-green); }
+  .about-body {
+    font-size: 14px; font-weight: 300;
+    color: var(--text-secondary); line-height: 1.82;
+    margin-bottom: 18px;
+  }
+  .about-pillars { margin-top: 40px; }
+  .about-pillar {
+    display: flex; align-items: flex-start; gap: 18px;
+    padding: 18px 0; border-bottom: 1px solid var(--border);
+  }
+  .about-pillar:first-child { border-top: 1px solid var(--border); }
+  .about-pillar-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--leaf-green); margin-top: 8px; flex-shrink: 0;
+  }
+  .about-pillar-title {
+    font-size: 13px; font-weight: 500;
+    color: var(--white); letter-spacing: 0.01em; margin-bottom: 3px;
+  }
+  .about-pillar-body { font-size: 12px; font-weight: 300; color: var(--text-secondary); line-height: 1.65; }
+
+  /* ════════════════════ PORTFOLIO ════════════════════ */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px; margin-bottom: 40px;
+  }
+  .portfolio-card {
+    position: relative; border-radius: 3px;
+    overflow: hidden; cursor: pointer;
+  }
+  .portfolio-card-img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block; aspect-ratio: 4/5;
+    transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+    filter: saturate(0.85);
+  }
+  .portfolio-card:first-child .portfolio-card-img { aspect-ratio: 3/4; }
+  .portfolio-card:hover .portfolio-card-img { transform: scale(1.05); filter: saturate(1); }
+  .portfolio-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(19,19,17,0.88) 0%, rgba(10,10,8,0.1) 45%, transparent 75%);
+    transition: opacity 0.3s;
+  }
+  .portfolio-card-body {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 24px 22px;
+  }
+  .portfolio-card-tag {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.18em; color: var(--bright-green);
+    text-transform: uppercase; display: block; margin-bottom: 7px;
+  }
+  .portfolio-card-title {
+    font-family: var(--font-display);
+    font-size: 19px; font-weight: 400;
+    color: var(--white); letter-spacing: -0.01em; line-height: 1.2;
+  }
+  .portfolio-card-sub {
+    font-size: 11px; font-weight: 300;
+    font-style: italic; color: var(--text-secondary);
+    margin-top: 4px; font-family: var(--font-display);
+  }
+  .portfolio-footer {
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .portfolio-footer p {
+    font-size: 13px; font-weight: 300;
+    font-style: italic; color: var(--text-secondary);
+    font-family: var(--font-display);
+  }
+
+  /* ════════════════════ NATURE STRIP ════════════════════ */
+  .nature-strip {
+    position: relative; overflow: hidden;
+    height: 320px;
+  }
+  .nature-strip img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 40%;
+    filter: saturate(0.8) brightness(0.55);
+    display: block;
+  }
+  .nature-strip-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(19,19,17,0.85) 0%, rgba(19,19,17,0.3) 50%, rgba(19,19,17,0.85) 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nature-strip-text {
+    text-align: center; max-width: 600px; padding: 0 32px;
+  }
+  .nature-strip-text blockquote {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 36px);
+    font-style: italic; font-weight: 300;
+    color: var(--white); line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .nature-strip-text cite {
+    display: block; margin-top: 18px;
+    font-size: 10px; font-weight: 400;
+    letter-spacing: 0.2em; color: var(--leaf-green);
+    text-transform: uppercase; font-style: normal;
+  }
+
+  /* ════════════════════ PROCESS ════════════════════ */
+  .process-header {
+    margin-bottom: 64px;
+  }
+  .process-grid {
+    display: grid; grid-template-columns: repeat(4,1fr);
+    border-top: 1px solid var(--border);
+  }
+  .process-step {
+    padding: 48px 36px 48px 0;
+    border-right: 1px solid var(--border);
+  }
+  .process-step:last-child { border-right: none; padding-right: 0; }
+  .process-step:not(:first-child) { padding-left: 36px; }
+  .process-num {
+    font-family: var(--font-display);
+    font-size: 52px; font-weight: 300;
+    color: var(--dark-green); letter-spacing: -0.04em;
+    line-height: 1; display: block; margin-bottom: 22px;
+  }
+  .process-title {
+    font-size: 14px; font-weight: 500;
+    color: var(--white); letter-spacing: 0.02em; margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .process-body {
+    font-size: 13px; font-weight: 300;
+    color: var(--text-secondary); line-height: 1.72;
+  }
+
+  /* ════════════════════ CTA ════════════════════ */
+  .cta-section {
+    position: relative; overflow: hidden;
+    background: var(--dark-green);
+    text-align: center; padding: 140px 72px;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 65% 80% at 50% 50%, rgba(74,122,58,0.2) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 40% at 15% 20%, rgba(44,74,46,0.28) 0%, transparent 55%),
+      radial-gradient(ellipse 25% 35% at 85% 80%, rgba(44,74,46,0.22) 0%, transparent 50%);
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 80px);
+    font-weight: 300; color: var(--white);
+    letter-spacing: -0.03em; line-height: 0.95;
+    margin-bottom: 28px;
+  }
+  .cta-title em { font-style: italic; color: var(--bright-green); }
+  .cta-sub {
+    font-size: 14px; font-weight: 300;
+    color: rgba(240,237,229,0.62);
+    max-width: 440px; margin: 0 auto 48px;
+    line-height: 1.72;
+  }
+  .cta-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .cta-email {
+    display: block; margin-top: 28px;
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.1em; color: var(--text-dim);
+    text-decoration: none; text-transform: lowercase;
+    transition: color 0.2s;
+  }
+  .cta-email:hover { color: var(--white); }
+
+  /* ════════════════════ FOOTER ════════════════════ */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 60px 72px 40px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px; margin-bottom: 48px;
+  }
+  .footer-logo img { height: 28px; width: auto; opacity: 0.8; margin-bottom: 16px; display: block; }
+  .footer-tagline {
+    font-family: var(--font-display);
+    font-size: 13px; font-style: italic;
+    color: var(--text-dim); line-height: 1.65; max-width: 200px;
+  }
+  .footer-col-label {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.22em; color: var(--text-dim);
+    text-transform: uppercase; display: block; margin-bottom: 20px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+  .footer-links a {
+    font-size: 13px; font-weight: 300;
+    color: var(--text-secondary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-links li.dim { font-size: 13px; color: var(--text-dim); font-weight: 300; }
+  .footer-bottom {
+    padding-top: 28px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .footer-copy { font-size: 10px; font-weight: 400; letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase; }
+  .footer-social {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 10px; font-weight: 400; letter-spacing: 0.1em;
+    color: var(--text-secondary); text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-social:hover { color: var(--white); }
+
+  /* ════════════════════ MOBILE NAV ════════════════════ */
+  .mobile-nav {
+    display: none; position: fixed; inset: 0; z-index: 90;
+    background: rgba(19,19,17,0.97);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    flex-direction: column; align-items: center;
+    justify-content: center; gap: 36px;
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    font-family: var(--font-display); font-size: 32px;
+    font-weight: 300; color: var(--text-secondary);
+    text-decoration: none; letter-spacing: -0.02em;
+    transition: color 0.2s;
+  }
+  .mobile-nav a:hover { color: var(--white); }
+  .mobile-nav a.small {
+    font-family: var(--font-ui); font-size: 12px;
+    font-style: normal; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-top: 8px;
+  }
+
+  /* ════════════════════ RESPONSIVE ════════════════════ */
+  @media (max-width: 1100px) {
+    nav { padding: 0 36px; }
+    .section { padding: 88px 40px; }
+    .hero-content { padding: 0 40px; }
+    .hero-scroll { right: 40px; }
+    .statement { padding: 80px 40px; }
+    .cta-section { padding: 100px 40px; }
+    footer { padding: 52px 40px 36px; }
+    .about-grid { gap: 48px; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .portfolio-grid > *:first-child { grid-column: span 2; }
+    .process-grid { grid-template-columns: repeat(2,1fr); }
+    .process-step:nth-child(2) { border-right: none; }
+    .process-step:nth-child(3) { border-top: 1px solid var(--border); border-right: 1px solid var(--border); padding-left: 0; }
+    .process-step:nth-child(4) { border-top: 1px solid var(--border); padding-left: 36px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+    .section { padding: 72px 24px; }
+    .hero-content { padding: 0 24px; }
+    .hero-scroll { right: 24px; }
+    .hero { padding-bottom: 80px; }
+    .statement { padding: 64px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-visual { order: -1; }
+    .about-img-accent { display: none; }
+    .services-grid { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .portfolio-grid > *:first-child { grid-column: span 1; }
+    .process-grid { grid-template-columns: 1fr; }
+    .process-step { border-right: none; border-top: 1px solid var(--border); padding: 36px 0; }
+    .process-step:first-child { border-top: none; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    footer { padding: 48px 24px 32px; }
+    .cta-section { padding: 80px 24px; }
+    .nature-strip { height: 240px; }
+  }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--leaf-green); outline-offset: 3px; border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Scroll Growth -->
+<div class="scroll-growth" aria-hidden="true">
+  <svg viewBox="0 0 62 1000" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="rootGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#3D6B35"/>
+        <stop offset="60%" stop-color="#4A7A3A"/>
+        <stop offset="100%" stop-color="#6AAF4A"/>
+      </linearGradient>
+    </defs>
+    <!-- Ghost background root -->
+    <path class="scroll-growth-ghost" d="M 31,0 C 29,36 33,72 30,108 C 27,109 24,109 23,110 C 22,152 19,193 18,235 C 19,193 22,152 23,110 C 20,111 18,112 17,113 C 16,154 12,194 10,235 C 12,194 16,154 17,113 C 21,112 25,110 30,108 C 27,144 32,182 31,220 C 34,221 38,222 43,224 C 44,266 47,308 48,350 C 47,308 44,266 43,224 C 48,226 52,228 56,230 C 57,270 59,310 60,350 C 59,310 57,270 56,230 C 49,227 40,223 31,220 C 28,265 32,300 30,335 C 27,336 24,338 21,339 C 19,379 15,420 13,460 C 15,420 19,379 21,339 C 18,341 14,343 11,344 C 9,383 6,422 4,460 C 6,422 9,383 11,344 C 17,341 23,338 30,335 C 27,375 32,410 31,445 C 33,446 36,447 38,447 C 39,490 42,532 43,575 C 42,532 39,490 38,447 C 40,448 42,449 44,450 C 46,492 50,534 52,575 C 50,534 46,492 44,450 C 40,449 35,447 31,445 C 28,490 32,525 30,560 C 26,561 22,563 17,564 C 15,603 11,642 10,680 C 11,642 15,603 17,564 C 12,567 8,569 4,570 C 3,607 1,644 0,680 C 1,644 3,607 4,570 C 10,566 20,563 30,560 C 28,598 32,632 31,665 C 34,666 37,668 41,669 C 42,711 46,753 47,795 C 46,753 42,711 41,669 C 44,671 48,673 51,673 C 53,714 57,754 58,795 C 57,754 53,714 51,673 C 45,670 37,668 31,665 C 29,710 32,745 30,780 C 27,781 24,782 22,783 C 21,820 17,858 16,895 C 17,858 21,820 22,783 C 20,784 18,786 17,787 C 15,823 11,859 10,895 C 11,859 15,823 17,787 C 21,785 25,782 30,780 C 28,820 32,850 31,880 C 34,881 38,883 43,884 C 44,923 47,962 48,1000 C 47,962 44,923 43,884 C 47,886 51,888 54,889 C 56,926 59,963 60,1000 C 59,963 56,926 54,889 C 47,886 38,883 31,880 C 29,920 32,960 31,1000"/>
+    <!-- Growing root (revealed by scroll) -->
+    <path id="scrollPath" class="scroll-growth-path" d="M 31,0 C 29,36 33,72 30,108 C 27,109 24,109 23,110 C 22,152 19,193 18,235 C 19,193 22,152 23,110 C 20,111 18,112 17,113 C 16,154 12,194 10,235 C 12,194 16,154 17,113 C 21,112 25,110 30,108 C 27,144 32,182 31,220 C 34,221 38,222 43,224 C 44,266 47,308 48,350 C 47,308 44,266 43,224 C 48,226 52,228 56,230 C 57,270 59,310 60,350 C 59,310 57,270 56,230 C 49,227 40,223 31,220 C 28,265 32,300 30,335 C 27,336 24,338 21,339 C 19,379 15,420 13,460 C 15,420 19,379 21,339 C 18,341 14,343 11,344 C 9,383 6,422 4,460 C 6,422 9,383 11,344 C 17,341 23,338 30,335 C 27,375 32,410 31,445 C 33,446 36,447 38,447 C 39,490 42,532 43,575 C 42,532 39,490 38,447 C 40,448 42,449 44,450 C 46,492 50,534 52,575 C 50,534 46,492 44,450 C 40,449 35,447 31,445 C 28,490 32,525 30,560 C 26,561 22,563 17,564 C 15,603 11,642 10,680 C 11,642 15,603 17,564 C 12,567 8,569 4,570 C 3,607 1,644 0,680 C 1,644 3,607 4,570 C 10,566 20,563 30,560 C 28,598 32,632 31,665 C 34,666 37,668 41,669 C 42,711 46,753 47,795 C 46,753 42,711 41,669 C 44,671 48,673 51,673 C 53,714 57,754 58,795 C 57,754 53,714 51,673 C 45,670 37,668 31,665 C 29,710 32,745 30,780 C 27,781 24,782 22,783 C 21,820 17,858 16,895 C 17,858 21,820 22,783 C 20,784 18,786 17,787 C 15,823 11,859 10,895 C 11,859 15,823 17,787 C 21,785 25,782 30,780 C 28,820 32,850 31,880 C 34,881 38,883 43,884 C 44,923 47,962 48,1000 C 47,962 44,923 43,884 C 47,886 51,888 54,889 C 56,926 59,963 60,1000 C 59,963 56,926 54,889 C 47,886 38,883 31,880 C 29,920 32,960 31,1000"/>
+  </svg>
+</div>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#dienstleistungen" onclick="closeMobileNav()">Dienstleistungen</a>
+  <a href="#portfolio" onclick="closeMobileNav()">Portfolio</a>
+  <a href="#kontakt" onclick="closeMobileNav()">Kontakt</a>
+  <a href="mailto:contact@vivariumatelier.ch" onclick="closeMobileNav()" class="small">contact@vivariumatelier.ch</a>
+</div>
+
+<!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <img src="brand%20assets/logovivarium.png" alt="Vivarium Atelier">
+  </a>
+  <div class="nav-links">
+    <a href="#dienstleistungen" class="nav-link">Dienstleistungen</a>
+    <a href="#portfolio" class="nav-link">Portfolio</a>
+    <a href="#prozess" class="nav-link">Prozess</a>
+    <a href="#kontakt" class="nav-link">Kontakt</a>
+    <a href="mailto:contact@vivariumatelier.ch" class="nav-cta">Anfrage stellen</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menü" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<section class="hero">
+  <img class="hero-bg-img" src="brand%20assets/Untitled%20design.jpg" alt="Bioaktives Vivarium von Vivarium Atelier">
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Bioaktive Vivariumgestaltung · Schweiz</div>
+    <h1 class="hero-title">
+      Natürliche<br>
+      Vivarium-<br>
+      <em>gestaltung.</em>
+    </h1>
+    <p class="hero-sub">
+      Maßgeschneiderte Terrarium- und Vivarium-Gestaltung für ein blühendes, natürliches Leben.
+    </p>
+    <div class="hero-actions">
+      <a href="#portfolio" class="btn-primary">Portfolio ansehen</a>
+      <a href="#kontakt" class="btn-ghost">Anfrage stellen</a>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════ STATEMENT ═══════════════════════════════ -->
+<div class="statement">
+  <span class="statement-label">Das Vivarium Atelier</span>
+  <p class="statement-text">
+    Wir gestalten <em>lebendige Lebensräume</em> — bioaktive Ökosysteme, die exakt auf die Bedürfnisse Ihrer Tiere abgestimmt sind und Ihr Zuhause bereichern.
+  </p>
+  <p class="statement-body">
+    Jedes Vivarium entsteht aus einer Kombination von biologischem Fachwissen, handwerklicher Sorgfalt und einem Gespür für schönes Design. Das Ergebnis ist ein selbsttragendes Ökosystem, das mit der Zeit immer natürlicher wird.
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════ SERVICES ═══════════════════════════════ -->
+<section class="section" id="dienstleistungen">
+  <span class="section-label">Unsere Dienstleistungen</span>
+  <h2 class="section-title">Was wir <em>anbieten</em></h2>
+
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <svg class="service-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 4C10 6 7 12 9 18S16 28 21 26S28 19 26 13S20 2 16 4Z"/>
+        <path d="M16 4L16 26M16 13C19 11 22 12 23 15M16 17C13 15 10 16 9 19"/>
+      </svg>
+      <h3 class="service-title">Maßgeschneidertes Design</h3>
+      <p class="service-body">Von der ersten Skizze bis zum fertigen Produkt kreieren wir individuelle Terrarien, die sich nahtlos in Ihre Inneneinrichtung einfügen.</p>
+      <span class="service-tag">Bespoke · Handgefertigt</span>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <svg class="service-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="16" cy="16" r="11"/>
+        <path d="M16 8v8l5 3"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor" stroke="none" opacity="0.3"/>
+      </svg>
+      <h3 class="service-title">Artenplanung</h3>
+      <p class="service-body">Präzisionsgefertigte Umgebungen, die exakt auf die Bedürfnisse Ihres jeweiligen Tieres hinsichtlich Luftfeuchtigkeit, Licht und Wärme abgestimmt sind.</p>
+      <span class="service-tag">Artgerecht · Präzise</span>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <svg class="service-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 27L13 15L19 21L23 13L28 4"/>
+        <circle cx="28" cy="4" r="2" fill="currentColor" stroke="none" opacity="0.4"/>
+        <path d="M8 30C8 27 11 24 15 25S20 29 17 31"/>
+        <path d="M20 30C21 27 24 26 27 27"/>
+      </svg>
+      <h3 class="service-title">Bioaktive Lebensräume</h3>
+      <p class="service-body">Sich selbst erhaltende Ökosysteme mit „Aufräumtrupps" und lebender Flora für einen wartungsarmen, natürlichen Kreislauf.</p>
+      <span class="service-tag">Selbsterhaltend · Natürlich</span>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <svg class="service-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="16" cy="16" r="11"/>
+        <path d="M12 14C12 12 14 10 16 10C18 10 20 11 20 13C20 15 18 16 16 17M16 21v1"/>
+      </svg>
+      <h3 class="service-title">Expertenberatung</h3>
+      <p class="service-body">Professionelle Beratung für Anfänger und fortgeschrittene Tierhalter, um einen langfristigen biologischen Erfolg zu gewährleisten.</p>
+      <span class="service-tag">Persönlich · Kompetent</span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
+<section class="section section-alt" id="atelier">
+  <div class="about-grid">
+
+    <div class="about-visual">
+      <div class="about-img-wrap">
+        <img src="brand%20assets/Untitled%20design.png" alt="Bioaktiver Lebensraum von Vivarium Atelier" loading="lazy">
+      </div>
+    </div>
+
+    <div>
+      <span class="section-label">Das Atelier</span>
+      <h2 class="about-title">Biologisches Wissen trifft <em>handwerkliche Sorgfalt</em></h2>
+      <p class="about-body">
+        Vivarium Atelier ist ein Schweizer Studio für maßgeschneiderte, bioaktive Lebensräume. Wir verbinden jahrelange Erfahrung in der Terraristik mit einem hohen Qualitätsanspruch im Handwerk.
+      </p>
+      <p class="about-body">
+        Jedes Vivarium wird individuell geplant und von Hand gebaut — mit naturbelassenen Materialien, lebenden Pflanzen und einem Aufräumtrupp, der das Ökosystem langfristig gesund hält.
+      </p>
+
+      <div class="about-pillars">
+        <div class="about-pillar">
+          <div class="about-pillar-dot"></div>
+          <div>
+            <div class="about-pillar-title">Naturbelassene Materialien</div>
+            <p class="about-pillar-body">Echtholz, Naturstein, Sphagnum-Moos und tropische Pflanzen werden sorgfältig ausgewählt und professionell aufbereitet.</p>
+          </div>
+        </div>
+        <div class="about-pillar">
+          <div class="about-pillar-dot"></div>
+          <div>
+            <div class="about-pillar-title">Artgerechte Haltung im Fokus</div>
+            <p class="about-pillar-body">Die Bedürfnisse Ihrer Tiere stehen immer an erster Stelle — Ästhetik und Funktion gehen dabei Hand in Hand.</p>
+          </div>
+        </div>
+        <div class="about-pillar">
+          <div class="about-pillar-dot"></div>
+          <div>
+            <div class="about-pillar-title">Übergabe und Begleitung</div>
+            <p class="about-pillar-body">Wir übergeben das Vivarium stabilisiert und eingerichtet — mit vollständiger Einführung in die Pflege Ihres neuen Lebensraumes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════ PORTFOLIO ═══════════════════════════════ -->
+<section class="section" id="portfolio">
+  <span class="section-label">Portfolio</span>
+  <h2 class="section-title">Aktuelle <em>Projekte</em></h2>
+
+  <div class="portfolio-grid">
+
+    <div class="portfolio-card">
+      <img class="portfolio-card-img" src="brand%20assets/Untitled%20design.jpg" alt="Vivarium für vietnamesische Stabheuschrecken" loading="lazy" style="object-position: right center;">
+      <div class="portfolio-card-overlay"></div>
+      <div class="portfolio-card-body">
+        <span class="portfolio-card-tag">Bioaktiv · Tropisch</span>
+        <div class="portfolio-card-title">Vivarium für Stabheuschrecken</div>
+        <div class="portfolio-card-sub">Vietnamesische Stabheuschrecken — Tropenhabitat</div>
+      </div>
+    </div>
+
+    <div class="portfolio-card">
+      <img class="portfolio-card-img" src="brand%20assets/Untitled%20design%20(1).png" alt="Terrarium für Kronengeckos" loading="lazy">
+      <div class="portfolio-card-overlay"></div>
+      <div class="portfolio-card-body">
+        <span class="portfolio-card-tag">Bioaktiv · Arboreal</span>
+        <div class="portfolio-card-title">Terrarium Kronengecko I</div>
+        <div class="portfolio-card-sub">Correlophus ciliatus</div>
+      </div>
+    </div>
+
+    <div class="portfolio-card">
+      <img class="portfolio-card-img" src="brand%20assets/spiderweb.jpg" alt="Bioaktives Terrarium Detail" loading="lazy">
+      <div class="portfolio-card-overlay"></div>
+      <div class="portfolio-card-body">
+        <span class="portfolio-card-tag">Bioaktiv · Arboreal</span>
+        <div class="portfolio-card-title">Terrarium Kronengecko II</div>
+        <div class="portfolio-card-sub">Correlophus ciliatus</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="portfolio-footer">
+    <p>Alle Projekte entstehen nach individueller Beratung und Planung.</p>
+    <a href="https://instagram.com/vivariumatelier.ch" target="_blank" rel="noopener" class="btn-link">
+      Mehr auf Instagram <span class="arr">→</span>
+    </a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════ NATURE STRIP ═══════════════════════════════ -->
+<div class="nature-strip">
+  <img src="brand%20assets/WhatsApp%20Image%202026-02-16%20at%2016.26.39.jpeg" alt="" aria-hidden="true" loading="lazy">
+  <div class="nature-strip-overlay">
+    <div class="nature-strip-text">
+      <blockquote>
+        "Ein Vivarium, das lebt, atmet und mit der Zeit immer schöner wird."
+      </blockquote>
+      <cite>Vivarium Atelier — Schweiz</cite>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════ PROCESS ═══════════════════════════════ -->
+<section class="section section-alt" id="prozess">
+  <div class="process-header">
+    <span class="section-label">Unser Prozess</span>
+    <h2 class="section-title" style="margin-bottom:0;">Von der Idee zum <em>lebenden Objekt</em></h2>
+  </div>
+
+  <div class="process-grid">
+    <div class="process-step">
+      <span class="process-num">01</span>
+      <div class="process-title">Beratung</div>
+      <p class="process-body">Wir besprechen Ihre Wünsche, die Tierart, den Standort und Ihre Vorstellungen. Jedes Projekt beginnt mit einem persönlichen Gespräch — unverbindlich und kostenlos.</p>
+    </div>
+    <div class="process-step">
+      <span class="process-num">02</span>
+      <div class="process-title">Planung</div>
+      <p class="process-body">Basierend auf Ihren Angaben entwickeln wir ein individuelles Konzept mit Skizzen, Bepflanzungsplan und technischer Spezifikation — abgestimmt auf Ihre Tierart.</p>
+    </div>
+    <div class="process-step">
+      <span class="process-num">03</span>
+      <div class="process-title">Fertigung</div>
+      <p class="process-body">Alle Materialien werden handverlesen und in unserem Atelier verarbeitet. Pflanzen, Substrate und Dekor werden artgerecht zusammengestellt und fachgerecht eingebaut.</p>
+    </div>
+    <div class="process-step">
+      <span class="process-num">04</span>
+      <div class="process-title">Übergabe</div>
+      <p class="process-body">Das fertige Vivarium wird stabilisiert und eingerichtet übergeben — inklusive vollständiger Einführung in die Pflege und Begleitung in der Eingewöhnungsphase.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════ CTA ═══════════════════════════════ -->
+<section class="cta-section" id="kontakt">
+  <div class="cta-inner">
+    <span class="section-label" style="display:block;margin-bottom:24px;">Jetzt anfragen</span>
+    <h2 class="cta-title">
+      Ihr Vivarium<br>
+      <em>wartet auf Sie.</em>
+    </h2>
+    <p class="cta-sub">
+      Bereit für einen natürlichen Lebensraum, der Ihre Tiere begeistert? Kontaktieren Sie uns für ein unverbindliches Erstgespräch.
+    </p>
+    <div class="cta-actions">
+      <a href="mailto:contact@vivariumatelier.ch" class="btn-primary">Projekt anfragen</a>
+      <a href="https://instagram.com/vivariumatelier.ch" target="_blank" rel="noopener" class="btn-ghost">Instagram</a>
+    </div>
+    <a href="mailto:contact@vivariumatelier.ch" class="cta-email">contact@vivariumatelier.ch</a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+
+    <div>
+      <a href="#"><img src="brand%20assets/logovivarium.png" alt="Vivarium Atelier"></a>
+      <p class="footer-tagline">Bioaktive Lebensräume — handgefertigt in der Schweiz.</p>
+    </div>
+
+    <div>
+      <span class="footer-col-label">Navigation</span>
+      <ul class="footer-links">
+        <li><a href="#dienstleistungen">Dienstleistungen</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#prozess">Prozess</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <span class="footer-col-label">Kontakt</span>
+      <ul class="footer-links">
+        <li><a href="mailto:contact@vivariumatelier.ch">contact@vivariumatelier.ch</a></li>
+        <li><a href="https://instagram.com/vivariumatelier.ch" target="_blank" rel="noopener">@vivariumatelier.ch</a></li>
+        <li class="dim" style="margin-top:4px;">Schweiz</li>
+      </ul>
+    </div>
+
+    <div>
+      <span class="footer-col-label">Rechtliches</span>
+      <ul class="footer-links">
+        <li><a href="#">AGB</a></li>
+        <li><a href="#">Impressum</a></li>
+        <li><a href="#">Datenschutz</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Vivarium Atelier · Alle Rechte vorbehalten</span>
+    <a href="https://instagram.com/vivariumatelier.ch" target="_blank" rel="noopener" class="footer-social">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <rect x="2" y="2" width="20" height="20" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+      @vivariumatelier.ch
+    </a>
+  </div>
+</footer>
+
+
+<script>
+  const nav = document.getElementById('mainNav');
+  const scrollPath = document.getElementById('scrollPath');
+  let pathLen = 0;
+
+  window.addEventListener('load', () => {
+    pathLen = scrollPath.getTotalLength();
+    scrollPath.style.strokeDasharray = pathLen;
+    scrollPath.style.strokeDashoffset = pathLen;
+  });
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    nav.classList.toggle('scrolled', scrolled > 40);
+    if (pathLen > 0) {
+      const pct = scrolled / (document.documentElement.scrollHeight - window.innerHeight);
+      scrollPath.style.strokeDashoffset = pathLen * (1 - Math.min(pct, 1));
+    }
+  }, { passive: true });
+
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+  function closeMobileNav() {
+    document.getElementById('mobileNav').classList.remove('open');
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+</script>
+</body>
+</html>
