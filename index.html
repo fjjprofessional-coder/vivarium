@@ -119,6 +119,25 @@
   }
   .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--text-secondary); transition: all 0.3s; }
 
+  /* ════════════════════ LANG TOGGLE ════════════════════ */
+  .lang-toggle { display: flex; align-items: center; gap: 2px; }
+  .lang-btn {
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--text-secondary);
+    background: none; border: none; cursor: pointer;
+    padding: 4px 5px; transition: color 0.2s;
+    font-family: var(--font-ui);
+  }
+  .lang-btn.active { color: var(--white); }
+  .lang-btn:hover { color: var(--white); }
+  .lang-sep { font-size: 11px; color: var(--text-secondary); opacity: 0.35; user-select: none; }
+  .mobile-nav .lang-toggle { margin-top: 16px; }
+  .mobile-nav .lang-btn { font-size: 16px; letter-spacing: 0.12em; padding: 8px 10px; color: var(--text-secondary); font-family: var(--font-ui); background: none; border: none; cursor: pointer; transition: color 0.2s; text-transform: uppercase; font-weight: 400; }
+  .mobile-nav .lang-btn.active { color: var(--white); }
+  .mobile-nav .lang-btn:hover { color: var(--white); }
+  .mobile-nav .lang-sep { font-size: 16px; color: var(--text-secondary); opacity: 0.35; user-select: none; }
+
   /* ════════════════════ HERO ════════════════════ */
   .hero {
     min-height: 100vh;
@@ -778,10 +797,15 @@
 
 <!-- Mobile Nav -->
 <div class="mobile-nav" id="mobileNav">
-  <a href="#dienstleistungen" onclick="closeMobileNav()">Dienstleistungen</a>
-  <a href="#portfolio" onclick="closeMobileNav()">Portfolio</a>
-  <a href="#kontakt" onclick="closeMobileNav()">Kontakt</a>
+  <a href="#dienstleistungen" data-i18n="nav-services" onclick="closeMobileNav()">Dienstleistungen</a>
+  <a href="#portfolio" data-i18n="nav-portfolio" onclick="closeMobileNav()">Portfolio</a>
+  <a href="#kontakt" data-i18n="nav-contact" onclick="closeMobileNav()">Kontakt</a>
   <a href="mailto:contact@vivariumatelier.ch" onclick="closeMobileNav()" class="small">contact@vivariumatelier.ch</a>
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="de" onclick="setLanguage('de')">DE</button>
+    <span class="lang-sep">/</span>
+    <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+  </div>
 </div>
 
 <!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
@@ -790,11 +814,16 @@
     <img src="./images/logovivarium.png" alt="Vivarium Atelier">
   </a>
   <div class="nav-links">
-    <a href="#dienstleistungen" class="nav-link">Dienstleistungen</a>
-    <a href="#portfolio" class="nav-link">Portfolio</a>
-    <a href="#prozess" class="nav-link">Prozess</a>
-    <a href="#kontakt" class="nav-link">Kontakt</a>
-    <a href="mailto:contact@vivariumatelier.ch" class="nav-cta">Anfrage stellen</a>
+    <a href="#dienstleistungen" class="nav-link" data-i18n="nav-services">Dienstleistungen</a>
+    <a href="#portfolio" class="nav-link" data-i18n="nav-portfolio">Portfolio</a>
+    <a href="#prozess" class="nav-link" data-i18n="nav-process">Prozess</a>
+    <a href="#kontakt" class="nav-link" data-i18n="nav-contact">Kontakt</a>
+    <div class="lang-toggle">
+      <button class="lang-btn" data-lang="de" onclick="setLanguage('de')">DE</button>
+      <span class="lang-sep">/</span>
+      <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+    </div>
+    <a href="mailto:contact@vivariumatelier.ch" class="nav-cta" data-i18n="nav-cta">Anfrage stellen</a>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Menü" onclick="toggleMobileNav()">
     <span></span><span></span><span></span>
@@ -808,18 +837,18 @@
   <div class="hero-overlay"></div>
 
   <div class="hero-content">
-    <div class="hero-eyebrow">Bioaktive Vivariumgestaltung · Schweiz</div>
-    <h1 class="hero-title">
+    <div class="hero-eyebrow" data-i18n="hero-eyebrow">Bioaktive Vivariumgestaltung · Schweiz</div>
+    <h1 class="hero-title" data-i18n-html="hero-title">
       Natürliche<br>
       Vivarium-<br>
       <em>gestaltung.</em>
     </h1>
-    <p class="hero-sub">
+    <p class="hero-sub" data-i18n="hero-sub">
       Maßgeschneiderte Terrarium- und Vivarium-Gestaltung für ein blühendes, natürliches Leben.
     </p>
     <div class="hero-actions">
-      <a href="#portfolio" class="btn-primary">Portfolio ansehen</a>
-      <a href="#kontakt" class="btn-ghost">Anfrage stellen</a>
+      <a href="#portfolio" class="btn-primary" data-i18n="hero-btn-primary">Portfolio ansehen</a>
+      <a href="#kontakt" class="btn-ghost" data-i18n="hero-btn-ghost">Anfrage stellen</a>
     </div>
   </div>
 
@@ -828,11 +857,11 @@
 
 <!-- ═══════════════════════════════ STATEMENT ═══════════════════════════════ -->
 <div class="statement">
-  <span class="statement-label">Das Vivarium Atelier</span>
-  <p class="statement-text">
+  <span class="statement-label" data-i18n="statement-label">Das Vivarium Atelier</span>
+  <p class="statement-text" data-i18n-html="statement-text">
     Wir gestalten <em>lebendige Lebensräume</em> — bioaktive Ökosysteme, die exakt auf die Bedürfnisse Ihrer Tiere abgestimmt sind und Ihr Zuhause bereichern.
   </p>
-  <p class="statement-body">
+  <p class="statement-body" data-i18n="statement-body">
     Jedes Vivarium entsteht aus einer Kombination von biologischem Fachwissen, handwerklicher Sorgfalt und einem Gespür für schönes Design. Das Ergebnis ist ein selbsttragendes Ökosystem, das mit der Zeit immer natürlicher wird.
   </p>
 </div>
@@ -840,8 +869,8 @@
 
 <!-- ═══════════════════════════════ SERVICES ═══════════════════════════════ -->
 <section class="section" id="dienstleistungen">
-  <span class="section-label">Unsere Dienstleistungen</span>
-  <h2 class="section-title">Was wir <em>anbieten</em></h2>
+  <span class="section-label" data-i18n="services-label">Unsere Dienstleistungen</span>
+  <h2 class="section-title" data-i18n-html="services-title">Was wir <em>anbieten</em></h2>
 
   <div class="services-grid">
 
@@ -851,9 +880,9 @@
         <path d="M16 4C10 6 7 12 9 18S16 28 21 26S28 19 26 13S20 2 16 4Z"/>
         <path d="M16 4L16 26M16 13C19 11 22 12 23 15M16 17C13 15 10 16 9 19"/>
       </svg>
-      <h3 class="service-title">Maßgeschneidertes Design</h3>
-      <p class="service-body">Von der ersten Skizze bis zum fertigen Produkt kreieren wir individuelle Terrarien, die sich nahtlos in Ihre Inneneinrichtung einfügen.</p>
-      <span class="service-tag">Bespoke · Handgefertigt</span>
+      <h3 class="service-title" data-i18n="service1-title">Maßgeschneidertes Design</h3>
+      <p class="service-body" data-i18n="service1-body">Von der ersten Skizze bis zum fertigen Produkt kreieren wir individuelle Terrarien, die sich nahtlos in Ihre Inneneinrichtung einfügen.</p>
+      <span class="service-tag" data-i18n="service1-tag">Bespoke · Handgefertigt</span>
     </div>
 
     <div class="service-card">
@@ -863,9 +892,9 @@
         <path d="M16 8v8l5 3"/>
         <circle cx="16" cy="16" r="3" fill="currentColor" stroke="none" opacity="0.3"/>
       </svg>
-      <h3 class="service-title">Artenplanung</h3>
-      <p class="service-body">Präzisionsgefertigte Umgebungen, die exakt auf die Bedürfnisse Ihres jeweiligen Tieres hinsichtlich Luftfeuchtigkeit, Licht und Wärme abgestimmt sind.</p>
-      <span class="service-tag">Artgerecht · Präzise</span>
+      <h3 class="service-title" data-i18n="service2-title">Artenplanung</h3>
+      <p class="service-body" data-i18n="service2-body">Präzisionsgefertigte Umgebungen, die exakt auf die Bedürfnisse Ihres jeweiligen Tieres hinsichtlich Luftfeuchtigkeit, Licht und Wärme abgestimmt sind.</p>
+      <span class="service-tag" data-i18n="service2-tag">Artgerecht · Präzise</span>
     </div>
 
     <div class="service-card">
@@ -876,9 +905,9 @@
         <path d="M8 30C8 27 11 24 15 25S20 29 17 31"/>
         <path d="M20 30C21 27 24 26 27 27"/>
       </svg>
-      <h3 class="service-title">Bioaktive Lebensräume</h3>
-      <p class="service-body">Sich selbst erhaltende Ökosysteme mit „Aufräumtrupps" und lebender Flora für einen wartungsarmen, natürlichen Kreislauf.</p>
-      <span class="service-tag">Selbsterhaltend · Natürlich</span>
+      <h3 class="service-title" data-i18n="service3-title">Bioaktive Lebensräume</h3>
+      <p class="service-body" data-i18n="service3-body">Sich selbst erhaltende Ökosysteme mit „Aufräumtrupps" und lebender Flora für einen wartungsarmen, natürlichen Kreislauf.</p>
+      <span class="service-tag" data-i18n="service3-tag">Selbsterhaltend · Natürlich</span>
     </div>
 
     <div class="service-card">
@@ -887,9 +916,9 @@
         <circle cx="16" cy="16" r="11"/>
         <path d="M12 14C12 12 14 10 16 10C18 10 20 11 20 13C20 15 18 16 16 17M16 21v1"/>
       </svg>
-      <h3 class="service-title">Expertenberatung</h3>
-      <p class="service-body">Professionelle Beratung für Anfänger und fortgeschrittene Tierhalter, um einen langfristigen biologischen Erfolg zu gewährleisten.</p>
-      <span class="service-tag">Persönlich · Kompetent</span>
+      <h3 class="service-title" data-i18n="service4-title">Expertenberatung</h3>
+      <p class="service-body" data-i18n="service4-body">Professionelle Beratung für Anfänger und fortgeschrittene Tierhalter, um einen langfristigen biologischen Erfolg zu gewährleisten.</p>
+      <span class="service-tag" data-i18n="service4-tag">Persönlich · Kompetent</span>
     </div>
 
   </div>
@@ -907,12 +936,12 @@
     </div>
 
     <div>
-      <span class="section-label">Das Atelier</span>
-      <h2 class="about-title">Biologisches Wissen trifft <em>handwerkliche Sorgfalt</em></h2>
-      <p class="about-body">
+      <span class="section-label" data-i18n="about-label">Das Atelier</span>
+      <h2 class="about-title" data-i18n-html="about-title">Biologisches Wissen trifft <em>handwerkliche Sorgfalt</em></h2>
+      <p class="about-body" data-i18n="about-body1">
         Vivarium Atelier ist ein Schweizer Studio für maßgeschneiderte, bioaktive Lebensräume. Wir verbinden jahrelange Erfahrung in der Terraristik mit einem hohen Qualitätsanspruch im Handwerk.
       </p>
-      <p class="about-body">
+      <p class="about-body" data-i18n="about-body2">
         Jedes Vivarium wird individuell geplant und von Hand gebaut — mit naturbelassenen Materialien, lebenden Pflanzen und einem Aufräumtrupp, der das Ökosystem langfristig gesund hält.
       </p>
 
@@ -920,22 +949,22 @@
         <div class="about-pillar">
           <div class="about-pillar-dot"></div>
           <div>
-            <div class="about-pillar-title">Naturbelassene Materialien</div>
-            <p class="about-pillar-body">Echtholz, Naturstein, Sphagnum-Moos und tropische Pflanzen werden sorgfältig ausgewählt und professionell aufbereitet.</p>
+            <div class="about-pillar-title" data-i18n="pillar1-title">Naturbelassene Materialien</div>
+            <p class="about-pillar-body" data-i18n="pillar1-body">Echtholz, Naturstein, Sphagnum-Moos und tropische Pflanzen werden sorgfältig ausgewählt und professionell aufbereitet.</p>
           </div>
         </div>
         <div class="about-pillar">
           <div class="about-pillar-dot"></div>
           <div>
-            <div class="about-pillar-title">Artgerechte Haltung im Fokus</div>
-            <p class="about-pillar-body">Die Bedürfnisse Ihrer Tiere stehen immer an erster Stelle — Ästhetik und Funktion gehen dabei Hand in Hand.</p>
+            <div class="about-pillar-title" data-i18n="pillar2-title">Artgerechte Haltung im Fokus</div>
+            <p class="about-pillar-body" data-i18n="pillar2-body">Die Bedürfnisse Ihrer Tiere stehen immer an erster Stelle — Ästhetik und Funktion gehen dabei Hand in Hand.</p>
           </div>
         </div>
         <div class="about-pillar">
           <div class="about-pillar-dot"></div>
           <div>
-            <div class="about-pillar-title">Übergabe und Begleitung</div>
-            <p class="about-pillar-body">Wir übergeben das Vivarium stabilisiert und eingerichtet — mit vollständiger Einführung in die Pflege Ihres neuen Lebensraumes.</p>
+            <div class="about-pillar-title" data-i18n="pillar3-title">Übergabe und Begleitung</div>
+            <p class="about-pillar-body" data-i18n="pillar3-body">Wir übergeben das Vivarium stabilisiert und eingerichtet — mit vollständiger Einführung in die Pflege Ihres neuen Lebensraumes.</p>
           </div>
         </div>
       </div>
@@ -947,8 +976,8 @@
 
 <!-- ═══════════════════════════════ PORTFOLIO ═══════════════════════════════ -->
 <section class="section" id="portfolio">
-  <span class="section-label">Portfolio</span>
-  <h2 class="section-title">Aktuelle <em>Projekte</em></h2>
+  <span class="section-label" data-i18n="portfolio-label">Portfolio</span>
+  <h2 class="section-title" data-i18n-html="portfolio-title">Aktuelle <em>Projekte</em></h2>
 
   <div class="portfolio-grid">
 
@@ -956,9 +985,9 @@
       <img class="portfolio-card-img" src="./images/vivarium-stickinsects.jpg" alt="Vivarium für vietnamesische Stabheuschrecken" loading="lazy" style="object-position: right center;">
       <div class="portfolio-card-overlay"></div>
       <div class="portfolio-card-body">
-        <span class="portfolio-card-tag">Bioaktiv · Tropisch</span>
-        <div class="portfolio-card-title">Vivarium für Stabheuschrecken</div>
-        <div class="portfolio-card-sub">Vietnamesische Stabheuschrecken — Tropenhabitat</div>
+        <span class="portfolio-card-tag" data-i18n="portfolio1-tag">Bioaktiv · Tropisch</span>
+        <div class="portfolio-card-title" data-i18n="portfolio1-title">Vivarium für Stabheuschrecken</div>
+        <div class="portfolio-card-sub" data-i18n="portfolio1-sub">Vietnamesische Stabheuschrecken — Tropenhabitat</div>
       </div>
     </div>
 
@@ -966,9 +995,9 @@
       <img class="portfolio-card-img" src="./images/terrarium-gecko-1.png" alt="Terrarium für Kronengeckos" loading="lazy">
       <div class="portfolio-card-overlay"></div>
       <div class="portfolio-card-body">
-        <span class="portfolio-card-tag">Bioaktiv · Arboreal</span>
-        <div class="portfolio-card-title">Terrarium Kronengecko I</div>
-        <div class="portfolio-card-sub">Correlophus ciliatus</div>
+        <span class="portfolio-card-tag" data-i18n="portfolio2-tag">Bioaktiv · Arboreal</span>
+        <div class="portfolio-card-title" data-i18n="portfolio2-title">Terrarium Kronengecko I</div>
+        <div class="portfolio-card-sub" data-i18n="portfolio2-sub">Correlophus ciliatus</div>
       </div>
     </div>
 
@@ -976,18 +1005,18 @@
       <img class="portfolio-card-img" src="./images/terrarium-gecko-2.jpg" alt="Bioaktives Terrarium Detail" loading="lazy">
       <div class="portfolio-card-overlay"></div>
       <div class="portfolio-card-body">
-        <span class="portfolio-card-tag">Bioaktiv · Arboreal</span>
-        <div class="portfolio-card-title">Terrarium Kronengecko II</div>
-        <div class="portfolio-card-sub">Correlophus ciliatus</div>
+        <span class="portfolio-card-tag" data-i18n="portfolio3-tag">Bioaktiv · Arboreal</span>
+        <div class="portfolio-card-title" data-i18n="portfolio3-title">Terrarium Kronengecko II</div>
+        <div class="portfolio-card-sub" data-i18n="portfolio3-sub">Correlophus ciliatus</div>
       </div>
     </div>
 
   </div>
 
   <div class="portfolio-footer">
-    <p>Alle Projekte entstehen nach individueller Beratung und Planung.</p>
+    <p data-i18n="portfolio-footer">Alle Projekte entstehen nach individueller Beratung und Planung.</p>
     <a href="https://instagram.com/vivariumatelier.ch" target="_blank" rel="noopener" class="btn-link">
-      Mehr auf Instagram <span class="arr">→</span>
+      <span data-i18n="portfolio-instagram">Mehr auf Instagram</span> <span class="arr">→</span>
     </a>
   </div>
 </section>
@@ -998,10 +1027,10 @@
   <img src="./images/nature-strip.jpg" alt="" aria-hidden="true" loading="lazy">
   <div class="nature-strip-overlay">
     <div class="nature-strip-text">
-      <blockquote>
+      <blockquote data-i18n="nature-quote">
         "Ein Vivarium, das lebt, atmet und mit der Zeit immer schöner wird."
       </blockquote>
-      <cite>Vivarium Atelier — Schweiz</cite>
+      <cite data-i18n="nature-cite">Vivarium Atelier — Schweiz</cite>
     </div>
   </div>
 </div>
@@ -1010,30 +1039,30 @@
 <!-- ═══════════════════════════════ PROCESS ═══════════════════════════════ -->
 <section class="section section-alt" id="prozess">
   <div class="process-header">
-    <span class="section-label">Unser Prozess</span>
-    <h2 class="section-title" style="margin-bottom:0;">Von der Idee zum <em>lebenden Objekt</em></h2>
+    <span class="section-label" data-i18n="process-label">Unser Prozess</span>
+    <h2 class="section-title" style="margin-bottom:0;" data-i18n-html="process-title">Von der Idee zum <em>lebenden Objekt</em></h2>
   </div>
 
   <div class="process-grid">
     <div class="process-step">
       <span class="process-num">01</span>
-      <div class="process-title">Beratung</div>
-      <p class="process-body">Wir besprechen Ihre Wünsche, die Tierart, den Standort und Ihre Vorstellungen. Jedes Projekt beginnt mit einem persönlichen Gespräch — unverbindlich und kostenlos.</p>
+      <div class="process-title" data-i18n="step1-title">Beratung</div>
+      <p class="process-body" data-i18n="step1-body">Wir besprechen Ihre Wünsche, die Tierart, den Standort und Ihre Vorstellungen. Jedes Projekt beginnt mit einem persönlichen Gespräch — unverbindlich und kostenlos.</p>
     </div>
     <div class="process-step">
       <span class="process-num">02</span>
-      <div class="process-title">Planung</div>
-      <p class="process-body">Basierend auf Ihren Angaben entwickeln wir ein individuelles Konzept mit Skizzen, Bepflanzungsplan und technischer Spezifikation — abgestimmt auf Ihre Tierart.</p>
+      <div class="process-title" data-i18n="step2-title">Planung</div>
+      <p class="process-body" data-i18n="step2-body">Basierend auf Ihren Angaben entwickeln wir ein individuelles Konzept mit Skizzen, Bepflanzungsplan und technischer Spezifikation — abgestimmt auf Ihre Tierart.</p>
     </div>
     <div class="process-step">
       <span class="process-num">03</span>
-      <div class="process-title">Fertigung</div>
-      <p class="process-body">Alle Materialien werden handverlesen und in unserem Atelier verarbeitet. Pflanzen, Substrate und Dekor werden artgerecht zusammengestellt und fachgerecht eingebaut.</p>
+      <div class="process-title" data-i18n="step3-title">Fertigung</div>
+      <p class="process-body" data-i18n="step3-body">Alle Materialien werden handverlesen und in unserem Atelier verarbeitet. Pflanzen, Substrate und Dekor werden artgerecht zusammengestellt und fachgerecht eingebaut.</p>
     </div>
     <div class="process-step">
       <span class="process-num">04</span>
-      <div class="process-title">Übergabe</div>
-      <p class="process-body">Das fertige Vivarium wird stabilisiert und eingerichtet übergeben — inklusive vollständiger Einführung in die Pflege und Begleitung in der Eingewöhnungsphase.</p>
+      <div class="process-title" data-i18n="step4-title">Übergabe</div>
+      <p class="process-body" data-i18n="step4-body">Das fertige Vivarium wird stabilisiert und eingerichtet übergeben — inklusive vollständiger Einführung in die Pflege und Begleitung in der Eingewöhnungsphase.</p>
     </div>
   </div>
 </section>
@@ -1042,17 +1071,17 @@
 <!-- ═══════════════════════════════ CTA ═══════════════════════════════ -->
 <section class="cta-section" id="kontakt">
   <div class="cta-inner">
-    <span class="section-label" style="display:block;margin-bottom:24px;">Jetzt anfragen</span>
-    <h2 class="cta-title">
+    <span class="section-label" style="display:block;margin-bottom:24px;" data-i18n="cta-label">Jetzt anfragen</span>
+    <h2 class="cta-title" data-i18n-html="cta-title">
       Ihr Vivarium<br>
       <em>wartet auf Sie.</em>
     </h2>
-    <p class="cta-sub">
+    <p class="cta-sub" data-i18n="cta-sub">
       Bereit für einen natürlichen Lebensraum, der Ihre Tiere begeistert? Kontaktieren Sie uns für ein unverbindliches Erstgespräch.
     </p>
     <div class="cta-actions">
-      <a href="mailto:contact@vivariumatelier.ch" class="btn-primary">Projekt anfragen</a>
-      <a href="https://instagram.com/vivariumatelier.ch" target="_blank" rel="noopener" class="btn-ghost">Instagram</a>
+      <a href="mailto:contact@vivariumatelier.ch" class="btn-primary" data-i18n="cta-btn-primary">Projekt anfragen</a>
+      <a href="https://instagram.com/vivariumatelier.ch" target="_blank" rel="noopener" class="btn-ghost" data-i18n="cta-btn-ghost">Instagram</a>
     </div>
     <a href="mailto:contact@vivariumatelier.ch" class="cta-email">contact@vivariumatelier.ch</a>
   </div>
@@ -1065,41 +1094,41 @@
 
     <div>
       <a href="#"><img src="./images/logovivarium.png" alt="Vivarium Atelier"></a>
-      <p class="footer-tagline">Bioaktive Lebensräume — handgefertigt in der Schweiz.</p>
+      <p class="footer-tagline" data-i18n="footer-tagline">Bioaktive Lebensräume — handgefertigt in der Schweiz.</p>
     </div>
 
     <div>
-      <span class="footer-col-label">Navigation</span>
+      <span class="footer-col-label" data-i18n="footer-nav-label">Navigation</span>
       <ul class="footer-links">
-        <li><a href="#dienstleistungen">Dienstleistungen</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#prozess">Prozess</a></li>
-        <li><a href="#kontakt">Kontakt</a></li>
+        <li><a href="#dienstleistungen" data-i18n="footer-nav-services">Dienstleistungen</a></li>
+        <li><a href="#portfolio" data-i18n="footer-nav-portfolio">Portfolio</a></li>
+        <li><a href="#prozess" data-i18n="footer-nav-process">Prozess</a></li>
+        <li><a href="#kontakt" data-i18n="footer-nav-contact">Kontakt</a></li>
       </ul>
     </div>
 
     <div>
-      <span class="footer-col-label">Kontakt</span>
+      <span class="footer-col-label" data-i18n="footer-contact-label">Kontakt</span>
       <ul class="footer-links">
         <li><a href="mailto:contact@vivariumatelier.ch">contact@vivariumatelier.ch</a></li>
         <li><a href="https://instagram.com/vivariumatelier.ch" target="_blank" rel="noopener">@vivariumatelier.ch</a></li>
-        <li class="dim" style="margin-top:4px;">Schweiz</li>
+        <li class="dim" style="margin-top:4px;" data-i18n="footer-location">Schweiz</li>
       </ul>
     </div>
 
     <div>
-      <span class="footer-col-label">Rechtliches</span>
+      <span class="footer-col-label" data-i18n="footer-legal-label">Rechtliches</span>
       <ul class="footer-links">
-        <li><a href="#" onclick="openLegal('agb');return false;">AGB</a></li>
-        <li><a href="#" onclick="openLegal('impressum');return false;">Impressum</a></li>
-        <li><a href="#" onclick="openLegal('datenschutz');return false;">Datenschutz</a></li>
+        <li><a href="#" data-i18n="footer-legal-agb" onclick="openLegal('agb');return false;">AGB</a></li>
+        <li><a href="#" data-i18n="footer-legal-impressum" onclick="openLegal('impressum');return false;">Impressum</a></li>
+        <li><a href="#" data-i18n="footer-legal-datenschutz" onclick="openLegal('datenschutz');return false;">Datenschutz</a></li>
       </ul>
     </div>
 
   </div>
 
   <div class="footer-bottom">
-    <span class="footer-copy">© 2025 Vivarium Atelier · Alle Rechte vorbehalten</span>
+    <span class="footer-copy" data-i18n="footer-copy">© 2025 Vivarium Atelier · Alle Rechte vorbehalten</span>
     <a href="https://instagram.com/vivariumatelier.ch" target="_blank" rel="noopener" class="footer-social">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
         <rect x="2" y="2" width="20" height="20" rx="5"/>
@@ -1123,59 +1152,314 @@
 </div>
 
 <script>
-  const legalContent = {
-    impressum: {
-      label: 'Rechtliches',
-      title: 'Impressum',
-      html: `
-        <p><strong style="color:var(--white);font-weight:500;">Inhaber:</strong> Fabio Jaun<br>
-        Rainallee 141<br>4125 Riehen<br>Schweiz</p>
-        <h3>Kontakt</h3>
-        <p>E-Mail: <a href="mailto:contact@vivariumatelier.ch">contact@vivariumatelier.ch</a><br>
-        Website: <a href="https://www.vivariumatelier.ch" target="_blank" rel="noopener">www.vivariumatelier.ch</a></p>
-        <p><strong style="color:var(--white);font-weight:500;">Vertretungsberechtigte Person:</strong> Fabio Jaun</p>
-        <h3>Haftungsausschluss</h3>
-        <p>Der Autor übernimmt keinerlei Gewähr hinsichtlich der inhaltlichen Richtigkeit, Genauigkeit, Aktualität, Zuverlässigkeit und Vollständigkeit der Informationen. Haftungsansprüche gegen den Autor wegen Schäden materieller oder immaterieller Art, welche aus dem Zugriff oder der Nutzung bzw. Nichtnutzung der veröffentlichten Informationen entstehen, werden ausgeschlossen. Alle Angebote sind unverbindlich.</p>
-      `
+  let currentLang = localStorage.getItem('lang') || 'de';
+  let currentLegalKey = null;
+
+  /* ── Translations ── */
+  const translations = {
+    de: {
+      'nav-services':        'Dienstleistungen',
+      'nav-portfolio':       'Portfolio',
+      'nav-process':         'Prozess',
+      'nav-contact':         'Kontakt',
+      'nav-cta':             'Anfrage stellen',
+      'hero-eyebrow':        'Bioaktive Vivariumgestaltung · Schweiz',
+      'hero-title':          'Natürliche<br>Vivarium-<br><em>gestaltung.</em>',
+      'hero-sub':            'Maßgeschneiderte Terrarium- und Vivarium-Gestaltung für ein blühendes, natürliches Leben.',
+      'hero-btn-primary':    'Portfolio ansehen',
+      'hero-btn-ghost':      'Anfrage stellen',
+      'statement-label':     'Das Vivarium Atelier',
+      'statement-text':      'Wir gestalten <em>lebendige Lebensräume</em> — bioaktive Ökosysteme, die exakt auf die Bedürfnisse Ihrer Tiere abgestimmt sind und Ihr Zuhause bereichern.',
+      'statement-body':      'Jedes Vivarium entsteht aus einer Kombination von biologischem Fachwissen, handwerklicher Sorgfalt und einem Gespür für schönes Design. Das Ergebnis ist ein selbsttragendes Ökosystem, das mit der Zeit immer natürlicher wird.',
+      'services-label':      'Unsere Dienstleistungen',
+      'services-title':      'Was wir <em>anbieten</em>',
+      'service1-title':      'Maßgeschneidertes Design',
+      'service1-body':       'Von der ersten Skizze bis zum fertigen Produkt kreieren wir individuelle Terrarien, die sich nahtlos in Ihre Inneneinrichtung einfügen.',
+      'service1-tag':        'Bespoke · Handgefertigt',
+      'service2-title':      'Artenplanung',
+      'service2-body':       'Präzisionsgefertigte Umgebungen, die exakt auf die Bedürfnisse Ihres jeweiligen Tieres hinsichtlich Luftfeuchtigkeit, Licht und Wärme abgestimmt sind.',
+      'service2-tag':        'Artgerecht · Präzise',
+      'service3-title':      'Bioaktive Lebensräume',
+      'service3-body':       'Sich selbst erhaltende Ökosysteme mit „Aufräumtrupps“ und lebender Flora für einen wartungsarmen, natürlichen Kreislauf.',
+      'service3-tag':        'Selbsterhaltend · Natürlich',
+      'service4-title':      'Expertenberatung',
+      'service4-body':       'Professionelle Beratung für Anfänger und fortgeschrittene Tierhalter, um einen langfristigen biologischen Erfolg zu gewährleisten.',
+      'service4-tag':        'Persönlich · Kompetent',
+      'about-label':         'Das Atelier',
+      'about-title':         'Biologisches Wissen trifft <em>handwerkliche Sorgfalt</em>',
+      'about-body1':         'Vivarium Atelier ist ein Schweizer Studio für maßgeschneiderte, bioaktive Lebensräume. Wir verbinden jahrelange Erfahrung in der Terraristik mit einem hohen Qualitätsanspruch im Handwerk.',
+      'about-body2':         'Jedes Vivarium wird individuell geplant und von Hand gebaut — mit naturbelassenen Materialien, lebenden Pflanzen und einem Aufräumtrupp, der das Ökosystem langfristig gesund hält.',
+      'pillar1-title':       'Naturbelassene Materialien',
+      'pillar1-body':        'Echtholz, Naturstein, Sphagnum-Moos und tropische Pflanzen werden sorgfältig ausgewählt und professionell aufbereitet.',
+      'pillar2-title':       'Artgerechte Haltung im Fokus',
+      'pillar2-body':        'Die Bedürfnisse Ihrer Tiere stehen immer an erster Stelle — Ästhetik und Funktion gehen dabei Hand in Hand.',
+      'pillar3-title':       'Übergabe und Begleitung',
+      'pillar3-body':        'Wir übergeben das Vivarium stabilisiert und eingerichtet — mit vollständiger Einführung in die Pflege Ihres neuen Lebensraumes.',
+      'portfolio-label':     'Portfolio',
+      'portfolio-title':     'Aktuelle <em>Projekte</em>',
+      'portfolio1-tag':      'Bioaktiv · Tropisch',
+      'portfolio1-title':    'Vivarium für Stabheuschrecken',
+      'portfolio1-sub':      'Vietnamesische Stabheuschrecken — Tropenhabitat',
+      'portfolio2-tag':      'Bioaktiv · Arboreal',
+      'portfolio2-title':    'Terrarium Kronengecko I',
+      'portfolio2-sub':      'Correlophus ciliatus',
+      'portfolio3-tag':      'Bioaktiv · Arboreal',
+      'portfolio3-title':    'Terrarium Kronengecko II',
+      'portfolio3-sub':      'Correlophus ciliatus',
+      'portfolio-footer':    'Alle Projekte entstehen nach individueller Beratung und Planung.',
+      'portfolio-instagram': 'Mehr auf Instagram',
+      'nature-quote':        '"Ein Vivarium, das lebt, atmet und mit der Zeit immer schöner wird."',
+      'nature-cite':         'Vivarium Atelier — Schweiz',
+      'process-label':       'Unser Prozess',
+      'process-title':       'Von der Idee zum <em>lebenden Objekt</em>',
+      'step1-title':         'Beratung',
+      'step1-body':          'Wir besprechen Ihre Wünsche, die Tierart, den Standort und Ihre Vorstellungen. Jedes Projekt beginnt mit einem persönlichen Gespräch — unverbindlich und kostenlos.',
+      'step2-title':         'Planung',
+      'step2-body':          'Basierend auf Ihren Angaben entwickeln wir ein individuelles Konzept mit Skizzen, Bepflanzungsplan und technischer Spezifikation — abgestimmt auf Ihre Tierart.',
+      'step3-title':         'Fertigung',
+      'step3-body':          'Alle Materialien werden handverlesen und in unserem Atelier verarbeitet. Pflanzen, Substrate und Dekor werden artgerecht zusammengestellt und fachgerecht eingebaut.',
+      'step4-title':         'Übergabe',
+      'step4-body':          'Das fertige Vivarium wird stabilisiert und eingerichtet übergeben — inklusive vollständiger Einführung in die Pflege und Begleitung in der Eingewöhnungsphase.',
+      'cta-label':           'Jetzt anfragen',
+      'cta-title':           'Ihr Vivarium<br><em>wartet auf Sie.</em>',
+      'cta-sub':             'Bereit für einen natürlichen Lebensraum, der Ihre Tiere begeistert? Kontaktieren Sie uns für ein unverbindliches Erstgespräch.',
+      'cta-btn-primary':     'Projekt anfragen',
+      'cta-btn-ghost':       'Instagram',
+      'footer-tagline':      'Bioaktive Lebensräume — handgefertigt in der Schweiz.',
+      'footer-nav-label':    'Navigation',
+      'footer-nav-services': 'Dienstleistungen',
+      'footer-nav-portfolio':'Portfolio',
+      'footer-nav-process':  'Prozess',
+      'footer-nav-contact':  'Kontakt',
+      'footer-contact-label':'Kontakt',
+      'footer-location':     'Schweiz',
+      'footer-legal-label':  'Rechtliches',
+      'footer-legal-agb':    'AGB',
+      'footer-legal-impressum':   'Impressum',
+      'footer-legal-datenschutz': 'Datenschutz',
+      'footer-copy':         '© 2025 Vivarium Atelier · Alle Rechte vorbehalten',
     },
-    agb: {
-      label: 'Rechtliches',
-      title: 'Allgemeine Geschäftsbedingungen',
-      html: `
-        <h3>1. Geltungsbereich</h3>
-        <p>Diese AGB gelten für alle Dienstleistungen von Vivarium Atelier (Inh. Fabio Jaun).</p>
-        <h3>2. Zahlungsbedingungen</h3>
-        <p>Die Zahlung erfolgt per Rechnung. Als Kleinunternehmen unter der Umsatzgrenze von CHF 100'000 wird keine Mehrwertsteuer erhoben.</p>
-        <h3>3. Haftungsübergang &amp; Gewährleistung</h3>
-        <ul>
-          <li><strong style="color:var(--white);font-weight:500;">Übergabe:</strong> Mit der physischen Übergabe des Vivariums/Paludariums geht die gesamte Verantwortung für den Betrieb auf den Kunden über.</li>
-          <li><strong style="color:var(--white);font-weight:500;">Wasserschäden:</strong> Vivarium Atelier haftet nicht für Wasserschäden oder Folgeschäden an Gebäuden/Möbeln, die nach der Übergabe durch unsachgemäße Wartung oder natürliche Abnutzung entstehen.</li>
-          <li><strong style="color:var(--white);font-weight:500;">Tierwohl:</strong> Da es sich um biologische Systeme handelt, wird keine Haftung für die Gesundheit oder das Überleben von Tieren und Pflanzen nach der Übergabe übernommen.</li>
-        </ul>
-        <h3>4. Gerichtsstand</h3>
-        <p>Anwendbar ist Schweizer Recht. Gerichtsstand ist Basel-Stadt.</p>
-      `
-    },
-    datenschutz: {
-      label: 'Rechtliches',
-      title: 'Datenschutzerklärung',
-      html: `
-        <h3>1. Verantwortliche Stelle</h3>
-        <p>Verantwortlicher für die Datenverarbeitung auf dieser Website ist Fabio Jaun, Rainallee 141, 4125 Riehen.</p>
-        <h3>2. Datenerfassung auf unserer Website</h3>
-        <ul>
-          <li><strong style="color:var(--white);font-weight:500;">Hosting:</strong> Diese Website wird über Wix.com gehostet. Wix speichert Daten auf sicheren Servern weltweit (inkl. USA/EU). Wix ist zertifiziert, ein angemessenes Datenschutzniveau gemäß Schweizer revDSG einzuhalten.</li>
-          <li><strong style="color:var(--white);font-weight:500;">Kontaktformular:</strong> Daten aus dem Kontaktformular werden zur Bearbeitung Ihrer Anfrage gespeichert und nicht ohne Ihre Einwilligung weitergegeben.</li>
-          <li><strong style="color:var(--white);font-weight:500;">Cookies:</strong> Wir verwenden notwendige Cookies für den Betrieb der Wix-Plattform. Analyse-Cookies (Wix Analytics) werden zur Optimierung der Nutzererfahrung verwendet.</li>
-        </ul>
-        <h3>3. Ihre Rechte</h3>
-        <p>Sie haben jederzeit das Recht auf Auskunft, Berichtigung oder Löschung Ihrer gespeicherten Daten. Kontaktieren Sie uns dazu unter <a href="mailto:vivarium-atelier@proton.me">vivarium-atelier@proton.me</a>.</p>
-      `
+    en: {
+      'nav-services':        'Services',
+      'nav-portfolio':       'Portfolio',
+      'nav-process':         'Process',
+      'nav-contact':         'Contact',
+      'nav-cta':             'Get in touch',
+      'hero-eyebrow':        'Bioactive Vivarium Design · Switzerland',
+      'hero-title':          'Natural<br>Vivarium<br><em>Design.</em>',
+      'hero-sub':            'Bespoke terrarium and vivarium design for a thriving, natural life.',
+      'hero-btn-primary':    'View Portfolio',
+      'hero-btn-ghost':      'Get in touch',
+      'statement-label':     'Vivarium Atelier',
+      'statement-text':      'We create <em>living habitats</em> — bioactive ecosystems precisely tailored to the needs of your animals, enriching your home.',
+      'statement-body':      'Every vivarium is born from a combination of biological expertise, artisanal care, and a refined aesthetic sensibility. The result is a self-sustaining ecosystem that grows ever more natural with time.',
+      'services-label':      'Our Services',
+      'services-title':      'What we <em>offer</em>',
+      'service1-title':      'Bespoke Design',
+      'service1-body':       'From the initial sketch to the finished piece, we craft individual terrariums that integrate seamlessly into your interior.',
+      'service1-tag':        'Bespoke · Handcrafted',
+      'service2-title':      'Species Planning',
+      'service2-body':       'Precision-engineered environments tailored to the precise humidity, light, and temperature requirements of your specific animal.',
+      'service2-tag':        'Species-appropriate · Precise',
+      'service3-title':      'Bioactive Habitats',
+      'service3-body':       'Self-sustaining ecosystems with cleanup crews and living flora for a low-maintenance, natural cycle.',
+      'service3-tag':        'Self-sustaining · Natural',
+      'service4-title':      'Expert Consultation',
+      'service4-body':       'Professional guidance for beginners and experienced keepers alike, ensuring long-term biological success.',
+      'service4-tag':        'Personal · Expert',
+      'about-label':         'The Atelier',
+      'about-title':         'Biological knowledge meets <em>artisanal care</em>',
+      'about-body1':         'Vivarium Atelier is a Swiss studio for bespoke, bioactive living spaces. We combine years of terrarium expertise with an uncompromising commitment to quality craftsmanship.',
+      'about-body2':         'Every vivarium is individually planned and hand-built — using natural materials, living plants, and a cleanup crew that keeps the ecosystem healthy for years to come.',
+      'pillar1-title':       'Natural Materials',
+      'pillar1-body':        'Real wood, natural stone, sphagnum moss, and tropical plants are carefully selected and professionally prepared.',
+      'pillar2-title':       'Species Welfare First',
+      'pillar2-body':        'The needs of your animals always come first — aesthetics and function work hand in hand.',
+      'pillar3-title':       'Handover & Support',
+      'pillar3-body':        'We hand over the vivarium stabilised and fully set up — with a complete introduction to the care of your new living space.',
+      'portfolio-label':     'Portfolio',
+      'portfolio-title':     'Recent <em>Projects</em>',
+      'portfolio1-tag':      'Bioactive · Tropical',
+      'portfolio1-title':    'Vivarium for Stick Insects',
+      'portfolio1-sub':      'Vietnamese Stick Insects — Tropical Habitat',
+      'portfolio2-tag':      'Bioactive · Arboreal',
+      'portfolio2-title':    'Crested Gecko Terrarium I',
+      'portfolio2-sub':      'Correlophus ciliatus',
+      'portfolio3-tag':      'Bioactive · Arboreal',
+      'portfolio3-title':    'Crested Gecko Terrarium II',
+      'portfolio3-sub':      'Correlophus ciliatus',
+      'portfolio-footer':    'Every project is created following individual consultation and planning.',
+      'portfolio-instagram': 'More on Instagram',
+      'nature-quote':        '"A vivarium that lives, breathes, and grows more beautiful with time."',
+      'nature-cite':         'Vivarium Atelier — Switzerland',
+      'process-label':       'Our Process',
+      'process-title':       'From concept to <em>living object</em>',
+      'step1-title':         'Consultation',
+      'step1-body':          'We discuss your wishes, the species, the location, and your vision. Every project begins with a personal conversation — no obligation, no charge.',
+      'step2-title':         'Planning',
+      'step2-body':          'Based on your input, we develop an individual concept with sketches, planting plan, and technical specification — tailored to your species.',
+      'step3-title':         'Creation',
+      'step3-body':          'All materials are hand-selected and crafted in our atelier. Plants, substrates, and décor are assembled with species-appropriate care and expert precision.',
+      'step4-title':         'Handover',
+      'step4-body':          'The finished vivarium is delivered stabilised and fully set up — including a complete introduction to its care and support during the settling-in period.',
+      'cta-label':           'Start your project',
+      'cta-title':           'Your vivarium<br><em>awaits you.</em>',
+      'cta-sub':             'Ready for a natural habitat that inspires your animals? Contact us for a no-obligation first conversation.',
+      'cta-btn-primary':     'Enquire Now',
+      'cta-btn-ghost':       'Instagram',
+      'footer-tagline':      'Bioactive living spaces — handcrafted in Switzerland.',
+      'footer-nav-label':    'Navigation',
+      'footer-nav-services': 'Services',
+      'footer-nav-portfolio':'Portfolio',
+      'footer-nav-process':  'Process',
+      'footer-nav-contact':  'Contact',
+      'footer-contact-label':'Contact',
+      'footer-location':     'Switzerland',
+      'footer-legal-label':  'Legal',
+      'footer-legal-agb':    'Terms & Conditions',
+      'footer-legal-impressum':   'Legal Notice',
+      'footer-legal-datenschutz': 'Privacy Policy',
+      'footer-copy':         '© 2025 Vivarium Atelier · All rights reserved',
     }
   };
 
+  /* ── Legal modal content (bilingual) ── */
+  const legalContent = {
+    de: {
+      impressum: {
+        label: 'Rechtliches',
+        title: 'Impressum',
+        html: `
+          <p><strong style="color:var(--white);font-weight:500;">Inhaber:</strong> Fabio Jaun<br>
+          Rainallee 141<br>4125 Riehen<br>Schweiz</p>
+          <h3>Kontakt</h3>
+          <p>E-Mail: <a href="mailto:contact@vivariumatelier.ch">contact@vivariumatelier.ch</a><br>
+          Website: <a href="https://www.vivariumatelier.ch" target="_blank" rel="noopener">www.vivariumatelier.ch</a></p>
+          <p><strong style="color:var(--white);font-weight:500;">Vertretungsberechtigte Person:</strong> Fabio Jaun</p>
+          <h3>Haftungsausschluss</h3>
+          <p>Der Autor übernimmt keinerlei Gewähr hinsichtlich der inhaltlichen Richtigkeit, Genauigkeit, Aktualität, Zuverlässigkeit und Vollständigkeit der Informationen. Haftungsansprüche gegen den Autor wegen Schäden materieller oder immaterieller Art, welche aus dem Zugriff oder der Nutzung bzw. Nichtnutzung der veröffentlichten Informationen entstehen, werden ausgeschlossen. Alle Angebote sind unverbindlich.</p>
+        `
+      },
+      agb: {
+        label: 'Rechtliches',
+        title: 'Allgemeine Geschäftsbedingungen',
+        html: `
+          <h3>1. Geltungsbereich</h3>
+          <p>Diese AGB gelten für alle Dienstleistungen von Vivarium Atelier (Inh. Fabio Jaun).</p>
+          <h3>2. Zahlungsbedingungen</h3>
+          <p>Die Zahlung erfolgt per Rechnung. Als Kleinunternehmen unter der Umsatzgrenze von CHF 100'000 wird keine Mehrwertsteuer erhoben.</p>
+          <h3>3. Haftungsübergang &amp; Gewährleistung</h3>
+          <ul>
+            <li><strong style="color:var(--white);font-weight:500;">Übergabe:</strong> Mit der physischen Übergabe des Vivariums/Paludariums geht die gesamte Verantwortung für den Betrieb auf den Kunden über.</li>
+            <li><strong style="color:var(--white);font-weight:500;">Wasserschäden:</strong> Vivarium Atelier haftet nicht für Wasserschäden oder Folgeschäden an Gebäuden/Möbeln, die nach der Übergabe durch unsachgemäße Wartung oder natürliche Abnutzung entstehen.</li>
+            <li><strong style="color:var(--white);font-weight:500;">Tierwohl:</strong> Da es sich um biologische Systeme handelt, wird keine Haftung für die Gesundheit oder das Überleben von Tieren und Pflanzen nach der Übergabe übernommen.</li>
+          </ul>
+          <h3>4. Gerichtsstand</h3>
+          <p>Anwendbar ist Schweizer Recht. Gerichtsstand ist Basel-Stadt.</p>
+        `
+      },
+      datenschutz: {
+        label: 'Rechtliches',
+        title: 'Datenschutzerklärung',
+        html: `
+          <h3>1. Verantwortliche Stelle</h3>
+          <p>Verantwortlicher für die Datenverarbeitung auf dieser Website ist Fabio Jaun, Rainallee 141, 4125 Riehen.</p>
+          <h3>2. Datenerfassung auf unserer Website</h3>
+          <ul>
+            <li><strong style="color:var(--white);font-weight:500;">Hosting:</strong> Diese Website wird über Wix.com gehostet. Wix speichert Daten auf sicheren Servern weltweit (inkl. USA/EU). Wix ist zertifiziert, ein angemessenes Datenschutzniveau gemäß Schweizer revDSG einzuhalten.</li>
+            <li><strong style="color:var(--white);font-weight:500;">Kontaktformular:</strong> Daten aus dem Kontaktformular werden zur Bearbeitung Ihrer Anfrage gespeichert und nicht ohne Ihre Einwilligung weitergegeben.</li>
+            <li><strong style="color:var(--white);font-weight:500;">Cookies:</strong> Wir verwenden notwendige Cookies für den Betrieb der Wix-Plattform. Analyse-Cookies (Wix Analytics) werden zur Optimierung der Nutzererfahrung verwendet.</li>
+          </ul>
+          <h3>3. Ihre Rechte</h3>
+          <p>Sie haben jederzeit das Recht auf Auskunft, Berichtigung oder Löschung Ihrer gespeicherten Daten. Kontaktieren Sie uns dazu unter <a href="mailto:vivarium-atelier@proton.me">vivarium-atelier@proton.me</a>.</p>
+        `
+      }
+    },
+    en: {
+      impressum: {
+        label: 'Legal',
+        title: 'Legal Notice',
+        html: `
+          <p><strong style="color:var(--white);font-weight:500;">Owner:</strong> Fabio Jaun<br>
+          Rainallee 141<br>4125 Riehen<br>Switzerland</p>
+          <h3>Contact</h3>
+          <p>Email: <a href="mailto:contact@vivariumatelier.ch">contact@vivariumatelier.ch</a><br>
+          Website: <a href="https://www.vivariumatelier.ch" target="_blank" rel="noopener">www.vivariumatelier.ch</a></p>
+          <p><strong style="color:var(--white);font-weight:500;">Authorised Representative:</strong> Fabio Jaun</p>
+          <h3>Disclaimer</h3>
+          <p>The author accepts no liability for the accuracy, correctness, timeliness, reliability, or completeness of the information provided. Any liability claims against the author arising from material or immaterial damage caused by access to, use of, or reliance on the published information are excluded. All offers are non-binding.</p>
+        `
+      },
+      agb: {
+        label: 'Legal',
+        title: 'Terms & Conditions',
+        html: `
+          <h3>1. Scope</h3>
+          <p>These Terms & Conditions apply to all services provided by Vivarium Atelier (Owner: Fabio Jaun).</p>
+          <h3>2. Payment Terms</h3>
+          <p>Payment is made by invoice. As a small business below the revenue threshold of CHF 100,000, no VAT is charged.</p>
+          <h3>3. Transfer of Liability &amp; Warranty</h3>
+          <ul>
+            <li><strong style="color:var(--white);font-weight:500;">Handover:</strong> Upon physical handover of the vivarium/paludarium, full operational responsibility transfers to the client.</li>
+            <li><strong style="color:var(--white);font-weight:500;">Water Damage:</strong> Vivarium Atelier accepts no liability for water damage or consequential damage to buildings or furniture arising after handover due to improper maintenance or natural wear.</li>
+            <li><strong style="color:var(--white);font-weight:500;">Animal Welfare:</strong> As these are biological systems, no liability is accepted for the health or survival of animals and plants after handover.</li>
+          </ul>
+          <h3>4. Jurisdiction</h3>
+          <p>Swiss law applies. Place of jurisdiction is Basel-Stadt.</p>
+        `
+      },
+      datenschutz: {
+        label: 'Legal',
+        title: 'Privacy Policy',
+        html: `
+          <h3>1. Responsible Party</h3>
+          <p>The party responsible for data processing on this website is Fabio Jaun, Rainallee 141, 4125 Riehen.</p>
+          <h3>2. Data Collection on Our Website</h3>
+          <ul>
+            <li><strong style="color:var(--white);font-weight:500;">Hosting:</strong> This website is hosted via Wix.com. Wix stores data on secure servers worldwide (incl. USA/EU). Wix is certified to maintain an adequate level of data protection in accordance with the Swiss revDSG.</li>
+            <li><strong style="color:var(--white);font-weight:500;">Contact Form:</strong> Data submitted via the contact form is stored solely for the purpose of processing your enquiry and is not shared without your consent.</li>
+            <li><strong style="color:var(--white);font-weight:500;">Cookies:</strong> We use necessary cookies for the operation of the Wix platform. Analytics cookies (Wix Analytics) are used to optimise the user experience.</li>
+          </ul>
+          <h3>3. Your Rights</h3>
+          <p>You have the right at any time to request access to, correction of, or deletion of your stored data. Please contact us at <a href="mailto:vivarium-atelier@proton.me">vivarium-atelier@proton.me</a>.</p>
+        `
+      }
+    }
+  };
+
+  /* ── Language functions ── */
+  function setLanguage(lang) {
+    currentLang = lang;
+    applyLanguage(lang);
+  }
+
+  function applyLanguage(lang) {
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.textContent = t[key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    if (currentLegalKey && document.getElementById('legalModal').classList.contains('open')) {
+      const c = legalContent[lang][currentLegalKey];
+      document.getElementById('legalModalLabel').textContent = c.label;
+      document.getElementById('legalModalTitle').textContent = c.title;
+      document.getElementById('legalModalBody').innerHTML = c.html;
+    }
+    localStorage.setItem('lang', lang);
+  }
+
+  /* ── Legal modal ── */
   function openLegal(key) {
-    const c = legalContent[key];
+    currentLegalKey = key;
+    const c = legalContent[currentLang][key];
     document.getElementById('legalModalLabel').textContent = c.label;
     document.getElementById('legalModalTitle').textContent = c.title;
     document.getElementById('legalModalBody').innerHTML = c.html;
@@ -1185,6 +1469,7 @@
   function closeLegal() {
     document.getElementById('legalModal').classList.remove('open');
     document.body.style.overflow = '';
+    currentLegalKey = null;
   }
   document.getElementById('legalModal').addEventListener('click', function(e) {
     if (e.target === this) closeLegal();
@@ -1193,6 +1478,7 @@
     if (e.key === 'Escape') closeLegal();
   });
 
+  /* ── Scroll growth ── */
   const nav = document.getElementById('mainNav');
 
   const clipGroups = [
@@ -1216,6 +1502,7 @@
   window.addEventListener('scroll', updateRoots, { passive: true });
   updateRoots();
 
+  /* ── Mobile nav ── */
   function toggleMobileNav() {
     document.getElementById('mobileNav').classList.toggle('open');
   }
@@ -1223,12 +1510,16 @@
     document.getElementById('mobileNav').classList.remove('open');
   }
 
+  /* ── Smooth scroll ── */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const t = document.querySelector(a.getAttribute('href'));
       if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
   });
+
+  /* ── Init language ── */
+  applyLanguage(currentLang);
 </script>
 </body>
 </html>
