@@ -1471,37 +1471,6 @@
     document.body.style.overflow = '';
     currentLegalKey = null;
   }
-  document.getElementById('legalModal').addEventListener('click', function(e) {
-    if (e.target === this) closeLegal();
-  });
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeLegal();
-  });
-
-  /* ── Scroll growth ── */
-  const nav = document.getElementById('mainNav');
-
-  const clipGroups = [
-    { id: 'cr0', stagger:   0 },
-    { id: 'cr1', stagger:  70 },
-    { id: 'cr2', stagger: -80 },
-    { id: 'cr3', stagger: 100 },
-    { id: 'cr4', stagger:-100 },
-  ].map(g => ({ el: document.getElementById(g.id), stagger: g.stagger }));
-
-  function updateRoots() {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
-    const base = pct * 1000;
-    clipGroups.forEach(({ el, stagger }) => {
-      if (el) el.setAttribute('height', Math.max(0, Math.min(1000, base + stagger)));
-    });
-  }
-
-  window.addEventListener('scroll', updateRoots, { passive: true });
-  updateRoots();
-
   /* ── Mobile nav ── */
   function toggleMobileNav() {
     document.getElementById('mobileNav').classList.toggle('open');
@@ -1510,16 +1479,49 @@
     document.getElementById('mobileNav').classList.remove('open');
   }
 
-  /* ── Smooth scroll ── */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const t = document.querySelector(a.getAttribute('href'));
-      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('legalModal').addEventListener('click', function(e) {
+      if (e.target === this) closeLegal();
     });
-  });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLegal();
+    });
 
-  /* ── Init language ── */
-  applyLanguage(currentLang);
+    /* ── Scroll growth ── */
+    const nav = document.getElementById('mainNav');
+
+    const clipGroups = [
+      { id: 'cr0', stagger:   0 },
+      { id: 'cr1', stagger:  70 },
+      { id: 'cr2', stagger: -80 },
+      { id: 'cr3', stagger: 100 },
+      { id: 'cr4', stagger:-100 },
+    ].map(g => ({ el: document.getElementById(g.id), stagger: g.stagger }));
+
+    function updateRoots() {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
+      const base = pct * 1000;
+      clipGroups.forEach(({ el, stagger }) => {
+        if (el) el.setAttribute('height', Math.max(0, Math.min(1000, base + stagger)));
+      });
+    }
+
+    window.addEventListener('scroll', updateRoots, { passive: true });
+    updateRoots();
+
+    /* ── Smooth scroll ── */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+
+    /* ── Init language ── */
+    applyLanguage(currentLang);
+  });
 </script>
 </body>
 </html>
